@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="p_text">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="input_text" parent="p_text">
+        <item name="android:textSize">250sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+</resources>

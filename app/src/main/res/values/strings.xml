@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MySQL test</string>
+
+    <!-- AUTH -->
+    <string name="auth_header_ru">АВТОРИЗАЦИЯ</string>
+
+    <string name="auth_login_ru">ЛОГИН</string>
+    <string name="auth_password_ru">ПАРОЛЬ</string>
+
+    <string name="auth_login_btn_ru">ВОЙТИ</string>
+    <!-- AUTH EN -->
+    <string name="auth_header_en">AUTHORIZATION</string>
+
+    <string name="auth_login_en">LOGIN</string>
+    <string name="auth_password_en">PASSWORD</string>
+
+    <string name="auth_login_btn_en">SIGN IN</string>
+    <!-- -->
+
+
+</resources>

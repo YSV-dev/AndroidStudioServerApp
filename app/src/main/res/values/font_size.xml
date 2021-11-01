@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fs_normal">15sp</dimen>
+    <dimen name="fs_normal_input">20sp</dimen>
+    <dimen name="fs_header_1">60sp</dimen>
+    <dimen name="fs_header_2">55sp</dimen>
+    <dimen name="fs_header_3">50sp</dimen>
+    <dimen name="fs_header_4">45sp</dimen>
+    <dimen name="fs_header_5">40sp</dimen>
+    <dimen name="fs_header_6">35sp</dimen>
+</resources>
