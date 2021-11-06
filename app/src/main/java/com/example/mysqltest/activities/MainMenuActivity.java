@@ -5,14 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.mysqltest.R;
@@ -23,16 +16,17 @@ import com.example.mysqltest.connection.Link;
 import com.example.mysqltest.connection.Proxy;
 import com.example.mysqltest.devtools.ActivityTools;
 import com.example.mysqltest.devtools.Logger;
+import com.example.mysqltest.devtools.LoggerErrors;
 import com.example.mysqltest.entities.ClientProfile;
 import com.example.mysqltest.entities.MenuCard;
 import com.example.mysqltest.entities.Profile;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class MainMenuActivity extends AppCompatActivity implements I_RequestabilityJSON, I_RequestabilityImage {
 
@@ -41,31 +35,29 @@ public class MainMenuActivity extends AppCompatActivity implements I_Requestabil
     private Context context;
     private Profile clientProfile;
 
+    private final List<MenuCard> menuCards = new ArrayList<>();
+    private Logger log;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityTools.hideHeaderBar(this);
         setContentView(R.layout.main_menu_activity);
+
+        log = new Logger(this);
+
         context = this;
         clientProfile = ClientProfile.getProfile();
 
         setElements();
-        addElements();
+        new Proxy((Context)this, Link.NEWS_POST, Link.NEWS_POST, null).sendJSONRequest();
         setData();
         setEvents();
     }
 
     private void addElements(){
 
-        new Proxy(this, Link.NEWS_POST, Link.NEWS_POST, null).sendJSONRequest();
-
-        List<MenuCard> menuCards = new ArrayList<>();
-//        menuCards.add(new MenuCard("test1", this));
-//        menuCards.add(new MenuCard("test2", this));
-//        menuCards.add(new MenuCard("test3", this));
-//        menuCards.add(new MenuCard("test4", this));
         MenuCardAdapter adapter = new MenuCardAdapter(context, menuCards);
-
         mainMenu.setAdapter(adapter);
     }
 
@@ -91,16 +83,24 @@ public class MainMenuActivity extends AppCompatActivity implements I_Requestabil
     public void onResponse(JSONObject JSON, String from, String key) {
         if(key.equals(Link.NEWS_POST)){
             try {
-                JSONObject data = JSON.getJSONObject("data");
-
+                JSONArray data = JSON.getJSONArray("data");
+                for(int cellID = 0; cellID != data.length(); cellID++) {
+                    JSONObject cell = data.getJSONObject(cellID);
+                    int id = cell.getInt("id");
+                    String header = cell.getString("header");
+                    String imageLink = cell.getString("image_link");
+                    menuCards.add(new MenuCard(this, id, header, imageLink));
+                }
             } catch (JSONException e) {
+                log.printSystemError(LoggerErrors.JSON_PARSE_ERROR);
                 e.printStackTrace();
             }
+            addElements();
         }
     }
 
     @Override
     public void onResponseError(String msg, String from, String key) {
-        new Logger(this).printSystemError(msg);
+        log.printSystemError(msg);
     }
 }

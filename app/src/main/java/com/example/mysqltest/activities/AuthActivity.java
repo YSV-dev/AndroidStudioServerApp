@@ -14,6 +14,7 @@ import com.example.mysqltest.devtools.ActivityTools;
 import com.example.mysqltest.devtools.Encryptor;
 import com.example.mysqltest.devtools.InputValidator;
 import com.example.mysqltest.devtools.Logger;
+import com.example.mysqltest.devtools.LoggerErrors;
 import com.example.mysqltest.devtools.validators.InputLatinChars;
 import com.example.mysqltest.devtools.validators.InputLengthValidator;
 import com.example.mysqltest.entities.ClientProfile;
@@ -34,6 +35,7 @@ public class AuthActivity extends AppCompatActivity implements I_RequestabilityJ
     private EditText loginEDT;
     private EditText passwordEDT;
     private TextView errorTV;
+    private Logger log;
 
     private AppCompatActivity activity;
 
@@ -41,6 +43,7 @@ public class AuthActivity extends AppCompatActivity implements I_RequestabilityJ
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityTools.hideHeaderBar(this);
+        log = new Logger(this);
         activity = this;
         setContentView(R.layout.auth_activity);
         setElements();
@@ -77,11 +80,11 @@ public class AuthActivity extends AppCompatActivity implements I_RequestabilityJ
             } else {
                 if(!passwordValid.getResult()){
                     errorTV.setText("Пароль введен не корректно!");
-                    System.out.println(passwordValid.getErrorCodes());
+                    log.printClientError("Пароль введен не корректно!");
                 }
                 if(!loginValid.getResult()){
                     errorTV.setText("Логин введен не корректно!");
-                    System.out.println(loginValid.getErrorCodes());
+                    log.printClientError("Логин введен не корректно!");
                 }
             }
         });
@@ -93,7 +96,7 @@ public class AuthActivity extends AppCompatActivity implements I_RequestabilityJ
             try {
                 if (!JSON.getBoolean("result")) {
                     errorTV.setText(JSON.getString("error"));
-                    new Logger(activity).printClientError("No such user");
+                    log.printClientError("No such user");
                 } else {
                     JSONObject JSONData = JSON.getJSONObject("data");
                     ClientProfile.setClientProfile(
@@ -109,13 +112,14 @@ public class AuthActivity extends AppCompatActivity implements I_RequestabilityJ
                     finish();
                 }
             } catch (JSONException e) {
-                new Logger(activity).printSystemError("Result didn't found");
+                log.printSystemError(LoggerErrors.JSON_PARSE_ERROR);
             }
         }
     }
 
     @Override
     public void onResponseError(String msg, String from, String key) {
+        log.printClientError(msg);
         errorTV.setText(msg);
     }
 }

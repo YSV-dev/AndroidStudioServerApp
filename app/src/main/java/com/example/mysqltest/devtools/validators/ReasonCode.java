@@ -1,5 +1,7 @@
 package com.example.mysqltest.devtools.validators;
 
+
+//Коды ошибок правил валидаторов для дальнейшей обработки
 public class ReasonCode {
     public static final int OK = -1;
 

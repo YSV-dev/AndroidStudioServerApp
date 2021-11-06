@@ -1,5 +1,6 @@
 package com.example.mysqltest.entities;
 
+//В перспективе на будущее существуют дополнительные поля с почтой
 public class Profile {
     private int userId = -1;
     private String login = "";

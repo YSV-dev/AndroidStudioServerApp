@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_columnWeight="1"
     android:layout_margin="5dp">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
         android:orientation="vertical"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@mipmap/ic_launcher_round">
+        android:src="@mipmap/ic_launcher_round"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:scaleType="centerCrop"
+        android:cropToPadding="true"
+        android:adjustViewBounds="true"
+        />
 
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:background="@color/black"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="@string/auth_header_ru"
+        android:textColor="@color/white"
+        android:layout_gravity="bottom"
+        android:textStyle="bold" />
 
-    </ImageButton>
-</LinearLayout>
+</FrameLayout>

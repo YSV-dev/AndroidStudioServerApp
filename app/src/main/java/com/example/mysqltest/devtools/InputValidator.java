@@ -4,6 +4,7 @@ import com.example.mysqltest.abstraction.I_ValidatorRule;
 
 import java.util.ArrayList;
 
+//Валидатор полей работающий по принципу передачи отвественности от одного правила к другому
 public class InputValidator {
     private ArrayList<I_ValidatorRule> validators = new ArrayList<I_ValidatorRule>();
     private ArrayList<Integer> errorCodes = new ArrayList<Integer>();
