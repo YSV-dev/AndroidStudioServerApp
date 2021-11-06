@@ -13,9 +13,9 @@ import com.example.mysqltest.connection.Proxy;
 public class MenuCard {
     private String imageLink;
     private String header;
-    private int id = -1;
+    private int id;
 
-    public MenuCard(Context context, int id, String header, String imageLink){
+    public MenuCard(int id, String header, String imageLink){
         this.header = header;
         this.imageLink = imageLink;
         this.id = id;

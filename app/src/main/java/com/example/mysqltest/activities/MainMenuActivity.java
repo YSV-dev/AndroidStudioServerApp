@@ -50,7 +50,7 @@ public class MainMenuActivity extends AppCompatActivity implements I_Requestabil
         clientProfile = ClientProfile.getProfile();
 
         setElements();
-        new Proxy((Context)this, Link.NEWS_POST, Link.NEWS_POST, null).sendJSONRequest();
+        new Proxy(this, Link.NEWS_POST, Link.NEWS_POST, null).sendJSONRequest();
         setData();
         setEvents();
     }
@@ -89,7 +89,7 @@ public class MainMenuActivity extends AppCompatActivity implements I_Requestabil
                     int id = cell.getInt("id");
                     String header = cell.getString("header");
                     String imageLink = cell.getString("image_link");
-                    menuCards.add(new MenuCard(this, id, header, imageLink));
+                    menuCards.add(new MenuCard(id, header, imageLink));
                 }
             } catch (JSONException e) {
                 log.printSystemError(LoggerErrors.JSON_PARSE_ERROR);
